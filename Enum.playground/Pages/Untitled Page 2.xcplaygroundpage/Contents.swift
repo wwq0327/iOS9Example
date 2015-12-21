@@ -169,5 +169,79 @@ case .Bad(let name, let age):
 }
 
 
-let c = 
+enum Device {
+    case iPad, iPhone, AppleTV, AppleWatch
+    func introduced() -> String {
+        switch self {
+        case .AppleTV: return "\(self) was introduced 2006"
+        case .iPhone: return "\(self) was introduced 2007"
+        case .iPad: return "\(self) was introduced 2010"
+        case .AppleWatch: return "\(self) was introduced 2014"
+        }
+    }
+}
+
+print(Device.iPhone.introduced())
+
+enum AppleDevice {
+    case AppleWatch
+    static func fromSlang(term: String) -> Device? {
+        if term == "iWatch" {
+            return .AppleWatch
+        }
+        return nil
+    }
+}
+
+print(AppleDevice.fromSlang("iWatch")!)
+
+//: 协议 Protocols
+protocol AccountCompatible {
+    var remainingFunds: Int { get }
+    mutating func addFunds(amount: Int) throws
+    mutating func removeFunds(amount: Int) throws
+}
+
+enum Account {
+    case Empty
+    case Funds(remaining: Int)
+    
+    enum Error: ErrorType {
+        case Overdraft(amount: Int)
+    }
+    
+    var remainingFunds: Int {
+        switch self {
+        case .Empty: return 0
+        case .Funds(let remaining): return remaining
+        }
+    }
+}
+
+extension Account: AccountCompatible {
+    mutating func addFunds(amount: Int) throws {
+        var newAmount = amount
+        if case let .Funds(remaining) = self {
+            newAmount += remaining
+        }
+        if newAmount < 0 {
+            throw Error.Overdraft(amount: -newAmount)
+        } else if newAmount == 0 {
+            self = .Empty
+        } else {
+            self = .Funds(remaining: newAmount)
+        }
+    }
+    
+    mutating func removeFunds(amount: Int) throws {
+        try self.addFunds(amount * -1)
+    }
+}
+
+var account = Account.Funds(remaining: 20)
+account.remainingFunds
+
+print("Add: ", try? account.addFunds(10))
+print ("remove 1: ", try? account.removeFunds(15))
+print ("remove 2: ", try? account.removeFunds(55))
 

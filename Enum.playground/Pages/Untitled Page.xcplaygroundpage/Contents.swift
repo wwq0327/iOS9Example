@@ -38,15 +38,4 @@ enum NumberParser: Int {
 
 NumberParser(rawValue: 2)
 
-//class NumbersParser {
-//    func numberToChinese(number: Int) -> String {
-//        let numbers = String(number).characters
-//        var finalString = ""
-//        for singleNumber in numbers {
-//            let string = NumberParser(rawValue: )
-//            finalString = "\(finalString)\(string)"
-//            
-//        }
-//        return finalString
-//    }
-//}
+
