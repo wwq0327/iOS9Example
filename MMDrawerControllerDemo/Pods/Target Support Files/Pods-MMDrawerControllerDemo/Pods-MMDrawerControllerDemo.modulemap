@@ -1,0 +1,6 @@
+framework module Pods_MMDrawerControllerDemo {
+  umbrella header "Pods-MMDrawerControllerDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}

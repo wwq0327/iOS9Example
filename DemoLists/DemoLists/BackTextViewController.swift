@@ -25,6 +25,8 @@ class BackTextViewController: UIViewController {
         style.firstLineHeadIndent = 10.0
         style.headIndent = 10
         style.tailIndent = 0
+        style.lineSpacing = 20.0
+        
         
         let attributes = [NSParagraphStyleAttributeName: style]
         textLabel.attributedText = NSAttributedString(string: textLabel.text!, attributes: attributes)
